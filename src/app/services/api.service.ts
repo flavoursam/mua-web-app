@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BookingResponse } from '../booking-response';
 
 @Injectable({
   providedIn: 'root'
@@ -30,17 +29,17 @@ export class ApiService {
 //     return this.http.post(url, data, options).map(res => res.json());
 // }
 
-  makeBooking(start, finish, year, month, day): Observable<BookingResponse> {
-    const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
-    const data = { 
-        start: start, 
-        finish: finish, 
-        year: year, 
-        month: month, 
-        day: day 
-      };
-    return this.http.post<BookingResponse>(`${this.BASE_URL}`, data, httpOptions);
-  }
+  // makeBooking(start, finish, year, month, day): Observable<BookingResponse> {
+  //   const httpOptions = { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) };
+  //   const data = { 
+  //       start: start, 
+  //       finish: finish, 
+  //       year: year, 
+  //       month: month, 
+  //       day: day 
+  //     };
+  //   return this.http.post<BookingResponse>(`${this.BASE_URL}`, data, httpOptions);
+  // }
 
   // get profile pic for about page
   getProfilePic(url): Observable<Blob> {

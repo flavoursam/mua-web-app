@@ -6,11 +6,6 @@ import { FormsModule,
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { MatDatepickerModule,
-         MatNativeDateModule,
-         MatFormFieldModule,
-         MatInputModule,
-          } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
@@ -19,8 +14,10 @@ import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
-import { BookingComponent } from './components/booking/booking.component';
-import { BookingFormComponent } from './components/booking/booking-form/booking-form.component';
+import { ScheduleBookingComponent } from './components/schedule-booking/schedule-booking.component';
+import { DateTimeComponent } from './components/schedule-booking/date-time/date-time.component';
+import { PersonalDetailsComponent } from './components/schedule-booking/personal-details/personal-details.component';
+
 
 @NgModule({
   declarations: [
@@ -30,8 +27,10 @@ import { BookingFormComponent } from './components/booking/booking-form/booking-
     HomeComponent,
     AboutComponent,
     GalleryComponent,
-    BookingComponent,
-    BookingFormComponent
+    DateTimeComponent,
+    PersonalDetailsComponent,
+    ScheduleBookingComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -39,7 +38,6 @@ import { BookingFormComponent } from './components/booking/booking-form/booking-
     HttpClientModule,
     FormsModule, ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatDatepickerModule, MatNativeDateModule, MatFormFieldModule, MatInputModule,
     NgbModule,
   ],
   providers: [],
