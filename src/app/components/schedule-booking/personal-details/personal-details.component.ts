@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { PersonalDetails } from 'src/app/schedule-booking-data.model';
+import { ScheduleBookingService } from '../../../services/schedule-booking.service';
 
 @Component({
   selector: 'app-personal-details',
@@ -7,9 +11,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalDetailsComponent implements OnInit {
 
-  constructor() { }
+  personalDetails: PersonalDetails;
+  form: any;
+  isDisplayed = false;
+
+  constructor(private router: Router, private scheduleBookingService: ScheduleBookingService) { }
 
   ngOnInit() {
+    this.personalDetails = this.scheduleBookingService.getPersonalDetails();
+    console.log('onInit getPersonalDetails() loaded!');
+  }
+
+  renderForm() {
+
+  }
+
+  renderPersonalDetailsForm() {
+    this.isDisplayed = true;
+    this.renderForm();
   }
 
 }

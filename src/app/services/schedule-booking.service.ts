@@ -11,14 +11,33 @@ export class ScheduleBookingService {
   private isDateTimeValid = false;
   private isPersonalDetailsValid = false;
 
-  getDateTime(): DateTime {
-    const timeSlot = 13;    // TO DO: handle time slot 
 
+
+  getPersonalDetails(): PersonalDetails {
+    const personalDetails: PersonalDetails = {
+      firstName: this.scheduleBookingData.firstName,
+      lastName: this.scheduleBookingData.lastName,
+      mobile: this.scheduleBookingData.mobile,
+      email: this.scheduleBookingData.email,
+    };
+    
+    return personalDetails;
+  }
+
+  setPersonalDetails(personalDetails: PersonalDetails) {
+    this.isPersonalDetailsValid = true;
+    this.scheduleBookingData.firstName = personalDetails.firstName;
+    this.scheduleBookingData.lastName = personalDetails.lastName;
+    this.scheduleBookingData.mobile = personalDetails.mobile;
+    this.scheduleBookingData.email = personalDetails.email;
+  }
+
+  getDateTime(): DateTime {
     const dateTime: DateTime = {
       year: this.scheduleBookingData.year,
       month: this.scheduleBookingData.month,
       day: this.scheduleBookingData.day,
-      timeSlot: timeSlot,   
+      timeSlot: this.scheduleBookingData.timeSlot,   
     };
 
     return dateTime;

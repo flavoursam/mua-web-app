@@ -1,3 +1,15 @@
-<p>
-  personal-details works!
-</p>
+<div class="container">
+  <div class="row">
+    <form #detailsForm class="detailsForm" *ngIf="isDisplayed">
+      <label for="firstName">First Name</label>
+      <input type="text" class="form-control" id="firstName" placeholder="First name..." 
+              required
+              [(ngModel)]="personalDetails.firstName"
+              name="firstName"
+              #firstName="ngModel">
+      <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger"> 
+        First name is required
+      </div>
+    </form>
+  </div>
+</div>

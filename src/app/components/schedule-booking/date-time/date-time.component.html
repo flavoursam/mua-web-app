@@ -1,25 +1,29 @@
 <div class="container">
   <div class="row">
     <div class="col-md">
-        <div class="picker">
-            <ngb-datepicker #dp [(ngModel)]="datePicker" 
-                              [ngModelOptions]="{standalone: true}">
-            </ngb-datepicker>
-          </div>
+      <div class="picker">
+        <ngb-datepicker #dp 
+            [(ngModel)]="datePicker" 
+            [ngModelOptions]="{standalone: true}">
+        </ngb-datepicker>
+      </div>
     </div>
     <div class="col-md">
-        <div class="slots">
-            <h5> {{ datePicker.day }} / {{ datePicker.month }} / {{datePicker.year }}</h5>
-            <ul>
-              <li *ngFor="let slot of timeSlots">
-                <button type="button" 
-                        class="btn btn-link" 
-                        (click)="selectTime(slot)">{{slot}}
-                </button>
-              </li>
-            </ul>
-          </div>
+      <div class="slots">
+        <ul>
+          <li *ngFor="let slot of timeSlots">
+            <button type="button" class="btn btn-link" (click)="selectTime(slot)">{{ slot }}</button>
+          </li>
+        </ul>
+      </div>
     </div>
-
+    <div class="col-md">
+      <h4> Your Details: </h4>
+      <p><strong>Date:</strong> {{ datePicker.day }}/{{ datePicker.month }}/{{datePicker.year }}</p>
+      <p><strong>Time:</strong> {{ slot }} </p>
+    </div>
+  </div>
+  <div class="row">
+    <button type="button" class="btn btn-success" (click)="next()">Next</button>
   </div>
 </div>
