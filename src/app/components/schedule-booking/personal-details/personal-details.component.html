@@ -1,15 +1,19 @@
 <div class="container">
   <div class="row">
-    <form #detailsForm class="detailsForm" *ngIf="isDisplayed">
+    <form #detailsForm class="form-group">
+
       <label for="firstName">First Name</label>
-      <input type="text" class="form-control" id="firstName" placeholder="First name..." 
-              required
-              [(ngModel)]="personalDetails.firstName"
-              name="firstName"
-              #firstName="ngModel">
-      <div [hidden]="firstName.valid || firstName.pristine" class="alert alert-danger"> 
-        First name is required
-      </div>
+      <input type="text" class="form-control" id="firstName" required [(ngModel)]="personalDetails.firstName" name="firstName">
+
+      <label for="lastName">Last Name</label>
+      <input type="text" class="form-control" id="lastName" required [(ngModel)]="personalDetails.lastName" name="lastName">
+      <label for="Mobile">Mobile</label>
+      <input type="text" class="form-control" id="mobile" required [(ngModel)]="personalDetails.mobile" name="mobile">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" required [(ngModel)]="personalDetails.email" name="email">
+      <hr />
+
+      <button type="button" class="btn btn-success" (click)="confirmBookingDetails()">Nexxxt</button>
     </form>
   </div>
 </div>

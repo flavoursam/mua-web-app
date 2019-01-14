@@ -2,17 +2,20 @@
   <div class="row">
     <div class="col-md">
       <div class="picker">
+        <h4>Choose your date:</h4>
         <ngb-datepicker #dp 
             [(ngModel)]="datePicker" 
             [ngModelOptions]="{standalone: true}">
+            <!-- (click)="selectDate(datePicker.day)"> -->
         </ngb-datepicker>
       </div>
     </div>
     <div class="col-md">
       <div class="slots">
         <ul>
-          <li *ngFor="let slot of timeSlots">
-            <button type="button" class="btn btn-link" (click)="selectTime(slot)">{{ slot }}</button>
+          <h4>Choose your time:</h4>
+          <li *ngFor="let time of timeSlots">
+            <button type="button" class="btn btn-link" (click)="selectTime(time)"> {{ time }}</button>
           </li>
         </ul>
       </div>
@@ -20,10 +23,10 @@
     <div class="col-md">
       <h4> Your Details: </h4>
       <p><strong>Date:</strong> {{ datePicker.day }}/{{ datePicker.month }}/{{datePicker.year }}</p>
-      <p><strong>Time:</strong> {{ slot }} </p>
+      <p><strong>Time:</strong> {{ time }} </p>
     </div>
   </div>
   <div class="row">
-    <button type="button" class="btn btn-success" (click)="next()">Next</button>
+    <button type="button" [disabled]="!isDateTimeValid" class="btn btn-success" (click)="sendDateTime()">Next</button>
   </div>
 </div>

@@ -1,8 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { PersonalDetails } from 'src/app/schedule-booking-data.model';
 import { ScheduleBookingService } from '../../../services/schedule-booking.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-personal-details',
@@ -11,24 +10,32 @@ import { ScheduleBookingService } from '../../../services/schedule-booking.servi
 })
 export class PersonalDetailsComponent implements OnInit {
 
-  personalDetails: PersonalDetails;
-  form: any;
-  isDisplayed = false;
+  private form: any;
+  private personalDetails = new PersonalDetails();
+  private isDisplayed = false;
+  private isPersonalDetailsValid = false;
 
-  constructor(private router: Router, private scheduleBookingService: ScheduleBookingService) { }
+  @Output() personalDetailsValues = new EventEmitter<PersonalDetails>();
+
+  constructor(private scheduleBookingService: ScheduleBookingService) { }
 
   ngOnInit() {
-    this.personalDetails = this.scheduleBookingService.getPersonalDetails();
-    console.log('onInit getPersonalDetails() loaded!');
   }
 
-  renderForm() {
-
+  confirmBookingDetails() {
+    // if (!this.form)    // TO DO: check form is valid before allowing user to submit
+    this.scheduleBookingService.setPersonalDetails(this.personalDetails);
+    this.sendPersonalDetails();
+    return true;
+  }
+  
+  personalDetailsValid() {
+    return this.isPersonalDetailsValid = true;
   }
 
-  renderPersonalDetailsForm() {
-    this.isDisplayed = true;
-    this.renderForm();
+  sendPersonalDetails() {
+    this.personalDetailsValues.emit(this.scheduleBookingService.getPersonalDetails());
+    console.log(this.scheduleBookingService.getPersonalDetails())
   }
-
+  
 }

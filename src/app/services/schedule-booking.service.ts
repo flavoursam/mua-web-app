@@ -11,8 +11,6 @@ export class ScheduleBookingService {
   private isDateTimeValid = false;
   private isPersonalDetailsValid = false;
 
-
-
   getPersonalDetails(): PersonalDetails {
     const personalDetails: PersonalDetails = {
       firstName: this.scheduleBookingData.firstName,
@@ -37,7 +35,8 @@ export class ScheduleBookingService {
       year: this.scheduleBookingData.year,
       month: this.scheduleBookingData.month,
       day: this.scheduleBookingData.day,
-      timeSlot: this.scheduleBookingData.timeSlot,   
+      start: this.scheduleBookingData.start,   
+      finish: this.scheduleBookingData.finish,   
     };
 
     return dateTime;
@@ -48,7 +47,9 @@ export class ScheduleBookingService {
     this.scheduleBookingData.year = dateTime.year;
     this.scheduleBookingData.month = dateTime.month;
     this.scheduleBookingData.day = dateTime.day;
-    this.scheduleBookingData.timeSlot = dateTime.timeSlot;
+    this.scheduleBookingData.start = dateTime.start;
+    this.scheduleBookingData.finish = dateTime.finish;
+
   }
 
   constructor() { }

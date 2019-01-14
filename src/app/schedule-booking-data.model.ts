@@ -2,22 +2,20 @@ export class ScheduleBookingData {
     year: number;
     month: number;
     day: number;
-    timeSlot: number;
+    start: number;
+    finish: number;
     firstName = '';
     lastName = '';
     mobile = '';
     email = '';
-
-    clear() {
-        // TO DO: clear instance variables
-    }   
 }
 
 export class DateTime {
     year: number;
     month: number;
     day: number;
-    timeSlot: number;
+    start: number;
+    finish: number;
 }
 
 export class PersonalDetails {

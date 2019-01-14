@@ -1,5 +1,7 @@
-<app-date-time (nextEvent)="personalDetails.renderPersonalDetailsForm($event)"></app-date-time>
 
-<app-personal-details #personalDetails ></app-personal-details>
+<app-date-time (dateTimeValues)="storeDateTime($event)"></app-date-time>
 
 
+<app-personal-details (personalDetailsValues)="storePersonalDetails($event)"></app-personal-details>
+
+<button type="button" class="btn btn-success" (click)="viewBookingSummary()">view summary</button>
