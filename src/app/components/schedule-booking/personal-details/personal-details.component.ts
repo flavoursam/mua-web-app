@@ -22,20 +22,20 @@ export class PersonalDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-  confirmBookingDetails() {
+  confirmPersonalDetails() {
     // if (!this.form)    // TO DO: check form is valid before allowing user to submit
     this.scheduleBookingService.setPersonalDetails(this.personalDetails);
     this.sendPersonalDetails();
+    this.personalDetailsValid();
     return true;
   }
-  
+
   personalDetailsValid() {
     return this.isPersonalDetailsValid = true;
   }
 
   sendPersonalDetails() {
     this.personalDetailsValues.emit(this.scheduleBookingService.getPersonalDetails());
-    console.log(this.scheduleBookingService.getPersonalDetails())
   }
   
 }

@@ -12,7 +12,7 @@ export class DateTimeComponent implements OnInit {
 
   private datePicker: NgbDateStruct;
   private timeSlots = [ 9, 10, 11, 12, 13, 14, 15, 16, 17 ]; // TO DO: time slot view
-  private isDateTimeValid = false;
+  private dateTimeValid = false;
   private time;
 
   @Output() dateTimeValues = new EventEmitter<DateTime>();
@@ -45,12 +45,12 @@ export class DateTimeComponent implements OnInit {
     };
     this.scheduleBookingService.setDateTime(dateTime);
     this.time = time;
-    this.dateTimeValid();
+    this.isDateTimeValid();
   }
 
-  dateTimeValid() {
+  isDateTimeValid() {
     // TO DO: validate selected date and time 
-    return this.isDateTimeValid = true;
+    return this.dateTimeValid = true;
   }
 
   sendDateTime() {

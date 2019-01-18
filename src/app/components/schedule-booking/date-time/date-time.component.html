@@ -3,10 +3,7 @@
     <div class="col-md">
       <div class="picker">
         <h4>Choose your date:</h4>
-        <ngb-datepicker #dp 
-            [(ngModel)]="datePicker" 
-            [ngModelOptions]="{standalone: true}">
-            <!-- (click)="selectDate(datePicker.day)"> -->
+        <ngb-datepicker #dp [(ngModel)]="datePicker" [ngModelOptions]="{standalone: true}">
         </ngb-datepicker>
       </div>
     </div>
@@ -20,13 +17,13 @@
         </ul>
       </div>
     </div>
-    <div class="col-md">
-      <h4> Your Details: </h4>
-      <p><strong>Date:</strong> {{ datePicker.day }}/{{ datePicker.month }}/{{datePicker.year }}</p>
-      <p><strong>Time:</strong> {{ time }} </p>
+  </div>
+  
+  <div class="row">
+    <div class="col-md" style="text-align:center;">
+      <button type="button" [disabled]="!isDateTimeValid" class="btn btn-success" (click)="sendDateTime()">Next</button>
     </div>
   </div>
-  <div class="row">
-    <button type="button" [disabled]="!isDateTimeValid" class="btn btn-success" (click)="sendDateTime()">Next</button>
-  </div>
+  <hr />
+
 </div>

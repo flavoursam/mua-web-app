@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ScheduleBookingService } from '../../services/schedule-booking.service';
 import { ApiService } from '../../services/api.service';
-import { Subject } from 'rxjs';
+import { ScheduleBookingResponse } from 'src/app/schedule-booking-response';
 
 @Component({
   selector: 'app-schedule-booking',
@@ -10,32 +10,41 @@ import { Subject } from 'rxjs';
 })
 export class ScheduleBookingComponent implements OnInit {
 
-  private requestData = []; 
+  requestData = []; 
+  submitted = false;
+  response = new ScheduleBookingResponse();
   
   constructor(private request: ApiService, private scheduleBookingService: ScheduleBookingService) { }
   
   ngOnInit() { }
 
   storePersonalDetails() {
-    this.requestData.push(this.scheduleBookingService.getPersonalDetails());
+    if (this.requestData.length === 0) {
+      this.requestData.push(this.scheduleBookingService.getPersonalDetails());
+    } else {
+      this.requestData.splice(1, 1, this.scheduleBookingService.getPersonalDetails());
+    }
   }
 
   storeDateTime() {
-    this.requestData = [];
-    this.requestData.push(this.scheduleBookingService.getDateTime());
-    console.log('storeDateTime so far:' , this.requestData)
+    if (this.requestData.length === 0) {
+      this.requestData.push(this.scheduleBookingService.getDateTime());
+    } else {
+      this.requestData.splice(0, 1, this.scheduleBookingService.getDateTime());
+    }
   }
 
-  viewBookingSummary() {
-    console.log('requestData: ', this.requestData)
+  submitBookingRequest() {    // TODO: validate booking details before sending booking request
+    this.scheduleBookingRequest();
   }
 
-  // sendBookingRequest(requestPayload) {
-  //   console.log("requestData: ", this.requestData)
-  //   this.request.makeBooking(requestPayload)
-  //     .subscribe((data) => {
-  //       console.log('data: ' , data)
-  //     });
-  // }
+  scheduleBookingRequest() {
+    this.request.makeBooking(this.requestData)
+      .subscribe((data) => {
+        this.submitted = true;
+        this.response.result = data.result;
+        this.response.id = data.bookingId;
+      });
+  }
 
 }

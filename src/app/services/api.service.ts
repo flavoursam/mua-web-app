@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ScheduleBookingData } from '../schedule-booking-data.model';
+// import { ScheduleBookingData } from '../schedule-booking-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,17 @@ export class ApiService {
     return this.http.get(`${this.BASE_URL}/booked/day`, { params });
   }
 
-  makeBooking(requestData): Observable<ScheduleBookingData> {
-    return this.http.post<ScheduleBookingData>(`${this.BASE_URL}`, requestData);
+  makeBooking(requestData): Observable<any> {
+    const data = requestData[1];
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let params = new HttpParams();
+    params = params.append('start', requestData[0].start);
+    params = params.append('finish', requestData[0].finish);
+    params = params.append('year', requestData[0].year);
+    params = params.append('month', requestData[0].month);
+    params = params.append('day', requestData[0].day);
+
+    return this.http.post<any>(this.BASE_URL, data, { headers: headers, params: params });
   }
 
   // get profile pic for about page
