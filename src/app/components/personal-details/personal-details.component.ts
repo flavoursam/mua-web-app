@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { PersonalDetails } from 'src/app/schedule-booking-data.model';
-import { ScheduleBookingService } from '../../../services/schedule-booking.service';
+import { PersonalDetails } from 'src/app/models/schedule-booking-data.model';
+import { ScheduleBookingService } from '../../services/schedule-booking.service';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -24,8 +24,8 @@ export class PersonalDetailsComponent implements OnInit {
 
   confirmPersonalDetails() {
     // if (!this.form)    // TO DO: check form is valid before allowing user to submit
-    this.scheduleBookingService.setPersonalDetails(this.personalDetails);
-    this.sendPersonalDetails();
+    const data = this.scheduleBookingService.setPersonalDetails(this.personalDetails);
+    this.sendPersonalDetails(data);
     this.personalDetailsValid();
     return true;
   }
@@ -34,8 +34,8 @@ export class PersonalDetailsComponent implements OnInit {
     return this.isPersonalDetailsValid = true;
   }
 
-  sendPersonalDetails() {
-    this.personalDetailsValues.emit(this.scheduleBookingService.getPersonalDetails());
+  sendPersonalDetails(data) {
+    this.personalDetailsValues.emit(data);
   }
   
 }

@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <div class="picker">
+        <h4>Choose your date:</h4>
+        <ngb-datepicker #d 
+          [ngModel]="dp" 
+          (ngModelChange)="onChange($event)" 
+          [ngModelOptions]="{standalone: true}">
+        </ngb-datepicker>
+      </div>
+      <button type="button" class="btn btn-success" (click)="check()">Check</button>
+    </div>
+    <div class="col-md">
+      <div class="slots">
+        <ul>
+          <h4>Choose your time:</h4>
+          <li *ngFor="let time of availableTimes">
+            <button type="button" class="btn btn-light" 
+              (click)="selectTime(time)"> {{ time.start }} - {{ time.finish }}</button>
+          </li>
+        </ul>
+        <button type="button" [disabled]="!isDateTimeValid" class="btn btn-success" (click)="sendDateTime()">Next</button>
+      </div>
+    </div>
+  </div>
+  <hr />
+
+</div>

@@ -25,3 +25,9 @@ export class PersonalDetails {
     email = '';
 }
 
+export class BookedTimes {
+    start: number;
+    finish: number;
+}
+
+

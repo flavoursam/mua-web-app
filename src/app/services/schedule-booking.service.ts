@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ScheduleBookingData, DateTime, PersonalDetails } from '../schedule-booking-data.model';
+import { ScheduleBookingData, BookedTimes, DateTime, PersonalDetails } from '../models/schedule-booking-data.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,7 @@ export class ScheduleBookingService {
 
   private isDateTimeValid = false;
   private isPersonalDetailsValid = false;
+
 
   getPersonalDetails(): PersonalDetails {
     const personalDetails: PersonalDetails = {
