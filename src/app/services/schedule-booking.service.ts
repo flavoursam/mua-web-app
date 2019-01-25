@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { ScheduleBookingData, BookedTimes, DateTime, PersonalDetails } from '../models/schedule-booking-data.model';
+import { ScheduleBookingData, Times, DateTime, PersonalDetails } from '../models/schedule-booking-data.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ScheduleBookingService {
 
-  private scheduleBookingData: ScheduleBookingData = new ScheduleBookingData();
+  scheduleBookingData: ScheduleBookingData = new ScheduleBookingData();
 
-  private isDateTimeValid = false;
-  private isPersonalDetailsValid = false;
+  // private isDateTimeValid = false;
+  // private isPersonalDetailsValid = false;
 
 
   getPersonalDetails(): PersonalDetails {
@@ -24,7 +24,6 @@ export class ScheduleBookingService {
   }
 
   setPersonalDetails(personalDetails: PersonalDetails) {
-    this.isPersonalDetailsValid = true;
     this.scheduleBookingData.firstName = personalDetails.firstName;
     this.scheduleBookingData.lastName = personalDetails.lastName;
     this.scheduleBookingData.mobile = personalDetails.mobile;
@@ -44,7 +43,6 @@ export class ScheduleBookingService {
   }
   
   setDateTime(dateTime: DateTime) {
-    this.isDateTimeValid = true;
     this.scheduleBookingData.year = dateTime.year;
     this.scheduleBookingData.month = dateTime.month;
     this.scheduleBookingData.day = dateTime.day;

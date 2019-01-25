@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
-import { PersonalDetails } from 'src/app/models/schedule-booking-data.model';
 import { ScheduleBookingService } from '../../services/schedule-booking.service';
 import { Subject } from 'rxjs';
+import { ApiService } from 'src/app/services/api.service';
+import { PersonalDetails } from 'src/app/models/schedule-booking-data.model';
+
 
 @Component({
   selector: 'app-personal-details',
@@ -10,32 +12,20 @@ import { Subject } from 'rxjs';
 })
 export class PersonalDetailsComponent implements OnInit {
 
-  private form: any;
-  private personalDetails = new PersonalDetails();
-  private isDisplayed = false;
-  private isPersonalDetailsValid = false;
+  personalDetails = new PersonalDetails();
 
   @Output() personalDetailsValues = new EventEmitter<PersonalDetails>();
 
-  constructor(private scheduleBookingService: ScheduleBookingService) { }
+  constructor(private scheduleBookingService: ScheduleBookingService,
+              private http: ApiService) { }
 
   ngOnInit() {
   }
 
-  confirmPersonalDetails() {
-    // if (!this.form)    // TO DO: check form is valid before allowing user to submit
-    const data = this.scheduleBookingService.setPersonalDetails(this.personalDetails);
-    this.sendPersonalDetails(data);
-    this.personalDetailsValid();
-    return true;
-  }
-
-  personalDetailsValid() {
-    return this.isPersonalDetailsValid = true;
-  }
-
-  sendPersonalDetails(data) {
-    this.personalDetailsValues.emit(data);
+  selectPersonalDetails() {
+    this.scheduleBookingService.setPersonalDetails(this.personalDetails);
+    this.personalDetailsValues.emit(this.scheduleBookingService.getPersonalDetails());
+    console.log(this.scheduleBookingService.getPersonalDetails())
   }
   
 }

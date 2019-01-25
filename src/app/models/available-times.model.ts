@@ -1,10 +1,6 @@
 export class AvailableTimes {
     times = [
         {
-            start: 6.5,
-            finish: 8.5
-        },
-        {
             start: 7,
             finish: 9
         },
@@ -87,14 +83,6 @@ export class AvailableTimes {
         {
             start: 17.0,
             finish: 19
-        },
-        {
-            start: 17.5,
-            finish: 19.5
-        },
-        {
-            start: 18.0,
-            finish: 20.0
         }
     ];
 

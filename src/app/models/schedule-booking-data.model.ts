@@ -25,7 +25,7 @@ export class PersonalDetails {
     email = '';
 }
 
-export class BookedTimes {
+export class Times {
     start: number;
     finish: number;
 }

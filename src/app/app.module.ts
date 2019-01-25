@@ -7,7 +7,6 @@ import { FormsModule,
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
-import { __ } from 'lodash';
 
 
 import { AppComponent } from './app.component';
@@ -35,7 +34,6 @@ import { LoginComponent } from './components/login/login.component';
     PersonalDetailsComponent,
     ScheduleBookingComponent,
     LoginComponent,
-
   ],
   imports: [
     BrowserModule,

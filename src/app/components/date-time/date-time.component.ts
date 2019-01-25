@@ -1,12 +1,10 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { __ } from 'lodash';
 import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 import { DateTime } from '../../models/schedule-booking-data.model';
 import { AvailableTimes } from '../../models/available-times.model';
 
 import { ScheduleBookingService } from '../../services/schedule-booking.service';
 import { ApiService } from 'src/app/services/api.service';
-import { MapType } from '@angular/compiler';
 
 
 @Component({
@@ -20,12 +18,13 @@ export class DateTimeComponent implements OnInit {
   unavailableTimes = [];
   availableTimes = [];
   allTimes = new AvailableTimes();
-
+  uiTimes = new Map();
+  
   @Output() dateTimeValues = new EventEmitter<DateTime>();
 
   constructor(private scheduleBookingService: ScheduleBookingService,
-    private calendar: NgbCalendar,
-    private http: ApiService) { }
+              private calendar: NgbCalendar,
+              private http: ApiService) { }
 
   ngOnInit() {
     this.dp = this.calendar.getToday();
@@ -40,7 +39,7 @@ export class DateTimeComponent implements OnInit {
 
   fetchDayBookedTimes(date) {
     this.http.getDayBookedTimes(date)
-      .subscribe((bookedTimes) => {
+      .subscribe((bookedTimes) => { // could be done in service?       
         let times = {};
         if (this.unavailableTimes.length !== 0) {
           this.unavailableTimes = [];
@@ -55,58 +54,72 @@ export class DateTimeComponent implements OnInit {
       });
   }
 
-  overlap(bookedStart, bookedFinish, availStart, availFinish) {
-    if (bookedStart <= availStart && availStart < bookedFinish) {
-      return true;
-    }
-    if (bookedStart < availFinish && availFinish <= bookedFinish) {
-      return true;
-    }
-    if (availStart < bookedStart && bookedFinish < availFinish) {
-      return true;
-    }
-    return false;
-  }
-
   check() {
-    this.sortTimes(this.unavailableTimes);
-    console.log(this.unavailableTimes);
-
+    this.uiTimes.clear(); // TO DO:
     const overlaps = [];
-    let i, j;
-    for (i = 0; i < this.unavailableTimes.length; i++) {
-      for (j = 0; j < this.allTimes.times.length; j++) {
-        const unavailTime = this.unavailableTimes[i];
-        const availTime = this.allTimes.times[j];
-        if (this.overlap(unavailTime.start, unavailTime.finish, availTime.start, availTime.finish)) {
-          overlaps.push({ start: availTime.start, finish: availTime.finish });
+    this.unavailableTimes.forEach(x => {
+      this.allTimes.times.forEach(y => {
+        if (this.overlap(x.start, x.finish, y.start, y.finish)) {
+          overlaps.push({ start: y.start, finish: y.finish });
         }
-      }
-    }
-      
+      });
+    });
+
     const onlyInA = overlaps.filter(this.difference(this.allTimes.times));
     const onlyInB = this.allTimes.times.filter(this.difference(overlaps));
-    
+    // console.log('Available booking times: ', onlyInA.concat(onlyInB));
     this.availableTimes = onlyInA.concat(onlyInB);
-    
-    console.log('Available booking times: ', this.availableTimes);
+    this.availableToViewMapping();
+
     return this.availableTimes;
-
   }
-
+  
   selectTime(time) {
     const dateTime = {
       year: this.dp.year,
       month: this.dp.month,
       day: this.dp.day,
-      start: time,
-      finish: time + 1
+      start: time.key,
+      finish: time.key + 2 
     };
     this.scheduleBookingService.setDateTime(dateTime);
+    this.dateTimeValues.emit(this.scheduleBookingService.getDateTime());
+    console.log(this.scheduleBookingService.getDateTime())
   }
 
-  sendDateTime() {
-    this.dateTimeValues.emit(this.scheduleBookingService.getDateTime());
+
+  availableToViewMapping() {
+    this.availableTimes.forEach((item) => {
+      let start;
+      if ((item.start < 12) && ((Number(item.start) === item.start) && (item.start % 1 === 0))) {
+        start = item.start + ':00 am';
+      } else if ((item.start < 12) && ((Number(item.start) === item.start) && (item.start % 1 !== 0))) {
+        start = Math.floor(item.start) + ':30 am';
+      } else if ((item.start >= 13) && ((Number(item.start) === item.start) && (item.start % 1 === 0))) {
+        start = item.start - 12 + ':00 pm';
+      } else if ((item.start >= 13) && ((Number(item.start) === item.start) && (item.start % 1 !== 0))) {
+        start = Math.floor(item.start - 12) + ':30 pm';        
+      } else if (item.start === 12.5) {       // edge cases 12 and 12:30
+        start = Math.floor(item.start) + ':30 pm';
+      } else {
+        start = item.start + ':00 pm';
+      }
+      this.uiTimes.set(item.start, start);
+    });
+    console.log('uiTimes: ' , this.uiTimes);
+  }
+
+  overlap(bookedStart, bookedFinish, availStart, availFinish) {
+    if ((bookedStart <= availStart) && (availStart < bookedFinish)) {
+      return true;
+    }
+    if ((bookedStart < availFinish) && (availFinish <= bookedFinish)) {
+      return true;
+    }
+    if ((availStart < bookedStart) && (bookedFinish < availFinish)) {
+      return true;
+    }
+    return false;
   }
 
   difference(otherArray) {
@@ -115,11 +128,6 @@ export class DateTimeComponent implements OnInit {
         return other.start === current.start && other.finish === current.finish;
       }).length === 0;
     };
-  }
-
-
-  sortTimes(arr) {
-    return arr.sort((a, b) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
   }
 
   dateFormatter(year, month, day) {

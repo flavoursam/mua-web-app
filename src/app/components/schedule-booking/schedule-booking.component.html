@@ -13,8 +13,8 @@
       <h3>Your Booking Details:</h3>
 
       <div *ngIf="submitted">
-        <p><strong>Time:</strong> {{ requestData[0].start }} - {{ requestData[0].finish}}</p>
-        <p><strong>Date:</strong> {{ requestData[0].day }}/{{ requestData[0].month }}/{{ requestData[0].year }}</p>
+        <p><strong>Time:</strong> {{ data[0].start }} - {{ data[0].finish}}</p>
+        <p><strong>Date:</strong> {{ data[0].day }}/{{ data[0].month }}/{{ data[0].year }}</p>
         <hr />
         <p>Result: {{ response.result }}</p>
         <p>Booking Id: {{ response.id }}</p>

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ScheduleBookingService } from '../../services/schedule-booking.service';
 import { ApiService } from '../../services/api.service';
+
 import { ScheduleBookingResponse } from 'src/app/schedule-booking-response';
+import { DateTimeComponent } from '../date-time/date-time.component';
 
 @Component({
   selector: 'app-schedule-booking',
@@ -10,41 +12,41 @@ import { ScheduleBookingResponse } from 'src/app/schedule-booking-response';
 })
 export class ScheduleBookingComponent implements OnInit {
 
-  requestData = []; 
+  data = [];
   submitted = false;
   response = new ScheduleBookingResponse();
-  
-  constructor(private request: ApiService, private scheduleBookingService: ScheduleBookingService) { }
-  
+
+  constructor(private request: ApiService, 
+              private scheduleBookingService: ScheduleBookingService) { }
+
   ngOnInit() { }
 
   storePersonalDetails() {
-    if (this.requestData.length === 0) {
-      this.requestData.push(this.scheduleBookingService.getPersonalDetails());
+    if (this.data.length === 0) {
+      this.data.push(this.scheduleBookingService.getPersonalDetails());
     } else {
-      this.requestData.splice(1, 1, this.scheduleBookingService.getPersonalDetails());
+      this.data.splice(1, 1, this.scheduleBookingService.getPersonalDetails());
     }
   }
 
   storeDateTime() {
-    if (this.requestData.length === 0) {
-      this.requestData.push(this.scheduleBookingService.getDateTime());
+    if (this.data.length === 0) {
+      this.data.push(this.scheduleBookingService.getDateTime());
     } else {
-      this.requestData.splice(0, 1, this.scheduleBookingService.getDateTime());
+      this.data.splice(0, 1, this.scheduleBookingService.getDateTime());
     }
   }
 
   submitBookingRequest() {    // TODO: validate booking details before sending booking request
-    this.scheduleBookingRequest();
-  }
-
-  scheduleBookingRequest() {
-    this.request.makeBooking(this.requestData)
+    console.log(this.data)
+    this.request.makeBooking(this.data)
       .subscribe((data) => {
         this.submitted = true;
         this.response.result = data.result;
         this.response.id = data.bookingId;
       });
   }
+
+
 
 }
