@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 import { ScheduleBookingService } from '../../services/schedule-booking.service';
-import { Subject } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { PersonalDetails } from 'src/app/models/schedule-booking-data.model';
 
@@ -16,8 +15,7 @@ export class PersonalDetailsComponent implements OnInit {
 
   @Output() personalDetailsValues = new EventEmitter<PersonalDetails>();
 
-  constructor(private scheduleBookingService: ScheduleBookingService,
-              private http: ApiService) { }
+  constructor(private scheduleBookingService: ScheduleBookingService) { }
 
   ngOnInit() {
   }

@@ -1,15 +1,24 @@
-<form #detailsForm class="form-group">
+<div class="container">
+  <div class="row">
+    <div class="col-md">
+      <h3>Your Details:</h3>
+      <form #detailsForm class="form-group">
 
-  <label for="firstName">First Name</label>
-  <input type="text" class="form-control" id="firstName" required [(ngModel)]="personalDetails.firstName" name="firstName">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" required [(ngModel)]="personalDetails.firstName" name="firstName">
 
-  <label for="lastName">Last Name</label>
-  <input type="text" class="form-control" id="lastName" required [(ngModel)]="personalDetails.lastName" name="lastName">
-  <label for="Mobile">Mobile</label>
-  <input type="text" class="form-control" id="mobile" required [(ngModel)]="personalDetails.mobile" name="mobile">
-  <label for="email">Email</label>
-  <input type="text" class="form-control" id="email" required [(ngModel)]="personalDetails.email" name="email">
-  <hr />
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" required [(ngModel)]="personalDetails.lastName" name="lastName">
+        <label for="Mobile">Mobile</label>
+        <input type="text" class="form-control" id="mobile" required [(ngModel)]="personalDetails.mobile" name="mobile">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" required [(ngModel)]="personalDetails.email" name="email">
+        <hr />
 
-  <button type="button" class="btn btn-success" (click)="selectPersonalDetails()">Next</button>
-</form>
+        <button type="button" class="btn btn-success" (click)="selectPersonalDetails()">Next</button>
+      </form>
+      <hr />
+
+    </div>
+  </div>
+</div>

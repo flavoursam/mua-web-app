@@ -1,9 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ScheduleBookingService } from '../../services/schedule-booking.service';
 import { ApiService } from '../../services/api.service';
-
-import { ScheduleBookingResponse } from 'src/app/schedule-booking-response';
-import { DateTimeComponent } from '../date-time/date-time.component';
+import { BookingResponseService } from 'src/app/services/booking-response.service';
 
 @Component({
   selector: 'app-schedule-booking',
@@ -13,11 +12,12 @@ import { DateTimeComponent } from '../date-time/date-time.component';
 export class ScheduleBookingComponent implements OnInit {
 
   data = [];
-  submitted = false;
-  response = new ScheduleBookingResponse();
 
-  constructor(private request: ApiService, 
-              private scheduleBookingService: ScheduleBookingService) { }
+  constructor(private http: ApiService, 
+              private scheduleBookingService: ScheduleBookingService,
+              private bookingResponseService: BookingResponseService,
+              private router: Router
+              ) { }
 
   ngOnInit() { }
 
@@ -38,13 +38,11 @@ export class ScheduleBookingComponent implements OnInit {
   }
 
   submitBookingRequest() {    // TODO: validate booking details before sending booking request
-    console.log(this.data)
-    this.request.makeBooking(this.data)
-      .subscribe((data) => {
-        this.submitted = true;
-        this.response.result = data.result;
-        this.response.id = data.bookingId;
+    this.http.makeBooking(this.data)
+      .subscribe((response) => {
+        this.bookingResponseService.sendMessage(response);
       });
+      this.router.navigate(['/bookingDetails']);
   }
 
 

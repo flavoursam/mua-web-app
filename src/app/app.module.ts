@@ -14,11 +14,11 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
-import { GalleryComponent } from './components/gallery/gallery.component';
 import { ScheduleBookingComponent } from './components/schedule-booking/schedule-booking.component';
 import { DateTimeComponent } from './components/date-time/date-time.component';
 import { PersonalDetailsComponent } from './components/personal-details/personal-details.component';
 import { LoginComponent } from './components/login/login.component';
+import { BookingDetailsComponent } from './components/booking-details/booking-details.component';
 
 
 
@@ -29,11 +29,11 @@ import { LoginComponent } from './components/login/login.component';
     FooterComponent,
     HomeComponent,
     AboutComponent,
-    GalleryComponent,
     DateTimeComponent,
     PersonalDetailsComponent,
     ScheduleBookingComponent,
     LoginComponent,
+    BookingDetailsComponent,
   ],
   imports: [
     BrowserModule,

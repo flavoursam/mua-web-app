@@ -1,7 +1,7 @@
 export class ScheduleBookingData {
-    year: number;
-    month: number;
-    day: number;
+    year: string;
+    month: string;
+    day: string;
     start: number;
     finish: number;
     firstName = '';
@@ -11,9 +11,9 @@ export class ScheduleBookingData {
 }
 
 export class DateTime {
-    year: number;
-    month: number;
-    day: number;
+    year: string;
+    month: string;
+    day: string;
     start: number;
     finish: number;
 }

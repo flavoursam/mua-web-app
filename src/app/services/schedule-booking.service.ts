@@ -11,7 +11,6 @@ export class ScheduleBookingService {
   // private isDateTimeValid = false;
   // private isPersonalDetailsValid = false;
 
-
   getPersonalDetails(): PersonalDetails {
     const personalDetails: PersonalDetails = {
       firstName: this.scheduleBookingData.firstName,

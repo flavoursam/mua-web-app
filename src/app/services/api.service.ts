@@ -12,12 +12,26 @@ export class ApiService {
 
   constructor(private http: HttpClient) { }
 
-  // get booked times for day
+  // get booked times by day
   getDayBookedTimes(date): Observable<any> {
     const params = new HttpParams().set('date', date);
-    return this.http.get(`${this.BASE_URL}/day`, { params });
+    return this.http.get(`${this.BASE_URL}/date`, { params });
   }
 
+  // get booking details by Id
+  getBookingListById(id): Observable<any> {
+    const params = new HttpParams().set('id', id);
+    return this.http.get(`${this.BASE_URL}/id`, { params });
+  }
+
+  // get list of bookings by email
+  getBookingListByEmail(email): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    return this.http.get(`${this.BASE_URL}/email`, { params });
+    
+  }
+
+  // schedule booking request
   makeBooking(requestData): Observable<any> {
     const data = requestData[1];
     const headers = new HttpHeaders().set('Content-Type', 'application/json');

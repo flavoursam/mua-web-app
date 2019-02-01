@@ -15,10 +15,12 @@ import { ApiService } from 'src/app/services/api.service';
 export class DateTimeComponent implements OnInit {
 
   dp: NgbDateStruct;
-  unavailableTimes = [];
-  availableTimes = [];
-  allTimes = new AvailableTimes();
-  uiTimes = new Map();
+  selectedDate: string;
+  today: string;
+  unavailableTimes = [];  // booked times
+  availableTimes = [];    // available for bookings times
+  allTimes = new AvailableTimes();  // all possible times
+  uiTimes = new Map();              // available times formatted for UI
   
   @Output() dateTimeValues = new EventEmitter<DateTime>();
 
@@ -28,18 +30,18 @@ export class DateTimeComponent implements OnInit {
 
   ngOnInit() {
     this.dp = this.calendar.getToday();
-    const today = this.dateFormatter(this.dp.year, this.dp.month, this.dp.day);
-    this.fetchDayBookedTimes(today);
+    this.today = this.dateFormatter(this.dp.year, this.dp.month, this.dp.day);
+    this.fetchDayBookedTimes(this.today);
   }
 
   onChange(value) {
-    const currentDay = this.dateFormatter(value.year, value.month, value.day);
-    this.fetchDayBookedTimes(currentDay);
+    this.selectedDate = this.dateFormatter(value.year, value.month, value.day);
+    this.fetchDayBookedTimes(this.selectedDate);
   }
 
   fetchDayBookedTimes(date) {
     this.http.getDayBookedTimes(date)
-      .subscribe((bookedTimes) => { // could be done in service?       
+      .subscribe((bookedTimes) => {      
         let times = {};
         if (this.unavailableTimes.length !== 0) {
           this.unavailableTimes = [];
@@ -71,20 +73,28 @@ export class DateTimeComponent implements OnInit {
     this.availableTimes = onlyInA.concat(onlyInB);
     this.availableToViewMapping();
 
-    return this.availableTimes;
+    return this.availableTimes; 
   }
   
   selectTime(time) {
+    let year, month, day;
+    if (this.selectedDate !== this.today) {
+      year = this.selectedDate.substring(0, 4);
+      month = this.selectedDate.substring(4, 6);
+      day = this.selectedDate.substring(6, 8);
+    } else {
+      // to do
+    }
     const dateTime = {
-      year: this.dp.year,
-      month: this.dp.month,
-      day: this.dp.day,
+      year: year,
+      month: month,
+      day: day,
       start: time.key,
       finish: time.key + 2 
     };
     this.scheduleBookingService.setDateTime(dateTime);
+    //  emit date and time to schedule booking component
     this.dateTimeValues.emit(this.scheduleBookingService.getDateTime());
-    console.log(this.scheduleBookingService.getDateTime())
   }
 
 
